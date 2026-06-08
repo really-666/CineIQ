@@ -20,27 +20,27 @@ Content discovery on modern streaming platforms is often opaque, biased toward p
 
 ```mermaid
 graph TD
-    subgraph Data & Preprocessing
+    subgraph DataPrep ["Data & Preprocessing"]
         ML[MovieLens 25M / Small] --> DP[Data Preprocessor]
         TMDB[TMDB Metadata] --> DP
         IMDB[IMDB 50K Reviews] --> DP
     end
 
-    subgraph Training & MLflow Registry
+    subgraph Registry ["Training & MLflow Registry"]
         DP --> Train[Training Modules]
         Train --> SVD[Surprise SVD Pickles]
         Train --> TFIDF[Sparse TF-IDF matrices]
         Train --> MLF[(MLflow Local Server)]
     end
 
-    subgraph API Backend (FastAPI)
+    subgraph APIBackend ["API Backend (FastAPI)"]
         SVD --> API[FastAPI Server]
         TFIDF --> API
         VADER[VADER Sentiment API] --> API
         API --> RecEngine[Hybrid Blend & Re-ranker]
     end
 
-    subgraph Client Application (Streamlit)
+    subgraph ClientApp ["Client Application (Streamlit)"]
         API -->|REST API| ST[Streamlit App]
         ST --> Plotly[Interactive Taste Charts]
         ST --> User((User UI))
